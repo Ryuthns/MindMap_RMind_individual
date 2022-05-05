@@ -8,7 +8,7 @@ import { downloadFile } from "../../../methods/assistFunctions";
 import mindmapExporter from "../../../methods/mindmapExporter";
 import { Highlight, ButtonSet } from "../common/styledComponents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePowerpoint } from "@fortawesome/free-solid-svg-icons";
+import { faFilePowerpoint, faJ } from "@fortawesome/free-solid-svg-icons";
 // import pptxgen from "pptxgenjs";
 import ToggleSwitch from "../../Switch/ToggleSwitch";
 import ManualExport from "./ManualExport";
@@ -28,6 +28,13 @@ const Export = ({ handleClosePopup, displayMan, setDisplayMan }) => {
       let url = canvas.toDataURL("image/png");
       downloadFile(url, `${title}.png`);
     });
+  };
+
+  const handleExportJson = () => {
+    const url = `data:text/plain,${encodeURIComponent(
+      JSON.stringify(mindmap)
+    )}`;
+    downloadFile(url, `${title}.json`);
   };
 
   const handleExportText = (format) => {
@@ -100,7 +107,7 @@ const Export = ({ handleClosePopup, displayMan, setDisplayMan }) => {
               >
                 <ToggleSwitch
                   style={{ marginBottom: "100px" }}
-                  label="Auto sorting"
+                  label="Auto Export"
                   bool={statePPTX}
                   setBool={setStatePPTX}
                 />
@@ -109,6 +116,17 @@ const Export = ({ handleClosePopup, displayMan, setDisplayMan }) => {
             <li onClick={handleExportPNG}>
               <i className={"zwicon-file-image"} />
               PNG image（.png）
+            </li>
+            <li onClick={handleExportJson}>
+              <FontAwesomeIcon
+                icon={faJ}
+                style={{
+                  fontSize: "26px",
+                  marginLeft: "4px",
+                  marginRight: "15px",
+                }}
+              ></FontAwesomeIcon>
+              JSON file （.json）
             </li>
             <li
               onClick={() => {

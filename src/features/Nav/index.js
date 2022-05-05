@@ -51,12 +51,12 @@ const Nav = () => {
     setPopup(popupType.NEW);
   };
 
-  const handleDownload = () => {
-    const url = `data:text/plain,${encodeURIComponent(
-      JSON.stringify(mindmap)
-    )}`;
-    downloadFile(url, `${title}.json`);
-  };
+  // const handleDownload = () => {
+  //   const url = `data:text/plain,${encodeURIComponent(
+  //     JSON.stringify(mindmap)
+  //   )}`;
+  //   downloadFile(url, `${title}.json`);
+  // };
 
   const handleOpenFile = () => {
     setPopup(popupType.OPEN);
@@ -129,9 +129,9 @@ const Nav = () => {
         <ToolButton icon={"folder-open"} onClick={handleOpenFile}>
           Open
         </ToolButton>
-        <ToolButton icon={"file-download"} onClick={handleDownload}>
+        {/* <ToolButton icon={"file-download"} onClick={handleDownload}>
           Download
-        </ToolButton>
+        </ToolButton> */}
         <ToolButton icon={"duplicate"} onClick={handleExport}>
           Export
         </ToolButton>
@@ -194,7 +194,7 @@ const Nav = () => {
           setDisplayMan={setDisplayMan}
           type={popup}
           handleClosePopup={handleClosePopup}
-          handleDownload={handleDownload}
+          // handleDownload={handleDownload}
         />
       )}
     </nav>
