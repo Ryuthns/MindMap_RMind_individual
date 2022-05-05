@@ -147,7 +147,11 @@ const Nav = () => {
         <ToolButton icon={"rotate-left"} onClick={() => handleZoom()}>
           Reset Zoom
         </ToolButton>
-        <ToolButton icon={"search"} onClick={() => handleSearch()}>
+        <ToolButton
+          icon={"search"}
+          onClick={() => handleSearch()}
+          title="CTRL+F"
+        >
           Search
         </ToolButton>
       </section>

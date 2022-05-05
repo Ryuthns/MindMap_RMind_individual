@@ -36,13 +36,14 @@ const Toolbar = ({ layer, node, parent }) => {
 
   return (
     <div className={wrapper} onClick={handlePropagation}>
-      <ToolButton icon={"git-commit"} onClick={handleAddChild}>
+      <ToolButton icon={"git-commit"} onClick={handleAddChild} title="TAB">
         Add child node
       </ToolButton>
       <ToolButton
         icon={"git-fork"}
         onClick={handleAddSibling}
         disabled={layer < 1}
+        title="ENTER"
       >
         Add sibling node
       </ToolButton>
@@ -50,10 +51,11 @@ const Toolbar = ({ layer, node, parent }) => {
         icon={"delete"}
         onClick={handleDeleteNode}
         disabled={layer < 1}
+        title="DELETE or BACKSPACE"
       >
         Delete
       </ToolButton>
-      <ToolButton icon={"edit-pencil"} onClick={handleEditNode}>
+      <ToolButton icon={"edit-pencil"} onClick={handleEditNode} title="F2">
         Edit
       </ToolButton>
       <ToolButton icon={"edit-pencil"} onClick={handleAddInfo}>
