@@ -6,6 +6,7 @@ import gen_powerpoint from "./Gen_slide";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 var DFS = [];
+let Checked, Disabled, id;
 const structDFS = (data, parent) => {
   let obj = {
     id: data.id,
@@ -60,9 +61,11 @@ const ManualExport = ({ handleClosePopup }) => {
   const [checkedState, setCheckedState] = useState();
   const [Idcheck, setIdCheck] = useState();
   const [disableState, setDisableState] = useState();
+
   useEffect(() => {
     clearNodeStatus();
   }, []);
+
   useEffect(() => {
     DFS = [];
     structDFS(mindmap, mindmap.title);
@@ -71,10 +74,40 @@ const ManualExport = ({ handleClosePopup }) => {
     list.forEach((e) => {
       idlist.push(e.id);
     });
-    setCheckedState(new Array(list.length).fill(true));
-    setDisableState(new Array(list.length).fill(false));
-    setIdCheck(idlist);
+
+    // let mindtemp = mindmap;
+    // if (mindtemp !== mindmap) {
+    //   localStorage.removeItem("Checked");
+    //   localStorage.removeItem("Disabled");
+    //   localStorage.removeItem("id");
+    //   setCheckedState(new Array(list.length).fill(true));
+    //   setDisableState(new Array(list.length).fill(false));
+    //   setIdCheck(idlist);}
+
+    if (
+      JSON.parse(localStorage.getItem("Checked")) &&
+      JSON.parse(localStorage.getItem("Disabled")) &&
+      JSON.parse(localStorage.getItem("id"))
+    ) {
+      Checked = JSON.parse(localStorage.getItem("Checked"));
+      Disabled = JSON.parse(localStorage.getItem("Disabled"));
+      id = JSON.parse(localStorage.getItem("id"));
+      setCheckedState(Checked);
+      setDisableState(Disabled);
+      setIdCheck(id);
+    } else {
+      setCheckedState(new Array(list.length).fill(true));
+      setDisableState(new Array(list.length).fill(false));
+      setIdCheck(idlist);
+    }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("Checked", JSON.stringify(checkedState));
+    localStorage.setItem("Disabled", JSON.stringify(disableState));
+    localStorage.setItem("id", JSON.stringify(Idcheck));
+  }, [checkedState, disableState, Idcheck]);
+
   useEffect(() => {
     onChangeSearchList(refreshSearchList(keyword, mindmap));
     setCursor(0);
@@ -122,10 +155,6 @@ const ManualExport = ({ handleClosePopup }) => {
   };
 
   const handleOnChange = (position) => {
-    // const updatedCheckedState = checkedState.map((item, index) =>
-    //   index === position ? !item : item
-    // );
-    // setCheckedState(updatedCheckedState);
     let updateArr = [...checkedState];
     let updateDis = [...disableState];
     let recursiveCount = 0;
